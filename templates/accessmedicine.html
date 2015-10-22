@@ -1,0 +1,7 @@
+<ul>
+{% for item in result_set|keys %}
+    <li>
+        <a href="#">{{item}} ({{result_set[item]}})</a>
+    </li>
+{% endfor %}
+<ul>

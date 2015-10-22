@@ -1,0 +1,13 @@
+<ul>
+{% for item in item_list %}
+    <li>
+        <a href="{{item.ur.0}}">{{item.ti.0}}</a>
+        <div class="authors">
+             {{ occ( {'element': item.au } ) }}
+        </div>
+        <div class="source">
+            {{item.fo.0}}
+        </div>
+    </li>
+{% endfor %}
+<ul>
