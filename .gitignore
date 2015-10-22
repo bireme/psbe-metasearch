@@ -1,0 +1,6 @@
+# ignore list
+
+/lib/vendor/*
+/config/config.php
+/logs/*
+/cache/*
