@@ -1,1 +1,7 @@
-total: {{total_hits}}
+{% if total_hits > 0 %}
+Total de resultados encontrados {{total_hits}}
+{% endif %}
+
+<div class="info">
+    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+</div>

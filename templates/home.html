@@ -55,7 +55,7 @@
     <div class="col-sm-6 col-sm-offset-3">
         <form action="" method='GET'>
             <div class="input-group stylish-input-group">
-                <input id='q' type="text" class="form-control"  placeholder="Entre uma ou mais palavras..." value="{{ q }}" >
+                <input id="q" name="q" type="text" class="form-control"  placeholder="Entre uma ou mais palavras..." value="{{ q }}" >
                 <span class="input-group-addon">
                     <button type="submit">
                         <span class="glyphicon glyphicon-search"></span>
@@ -67,40 +67,11 @@
 </div>
 
 {% if q %}
-<div class="row">
-    <ul class="ds-btn">
-        <li>
-            <a class="btn btn-lg btn-primary" href="#">
-                <span>Artigos Científicos</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-lg btn-success " href="#evidences">
-                <span>Evidências Clínicas</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-lg btn-danger" href="#">
-                <span>Livros & Mídia</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-lg btn-warning" href="#">
-                <span>Revistas</span>
-            </a>
-        </li>
-        <li>
-            <a class="btn btn-lg btn-info" href="#">
-                <span>Guías de prática</span>
-            </a>
-        </li>
-    </ul>
-</div>
-
 <div id='results' class='row-fluid'>
     <div id='articles-databases' class='col-md-4'>
         <div class="box">
             <h4>Artigos Científicos</h4>
+            <span class="label label-primary">Biblioteca Virtual em Saúde</span>
             <div id='bvs-response' class='row-fluid'>
                 <div class="throbber-loader">
                   Loading…
@@ -108,10 +79,12 @@
             </div>
         </div>
     </div>
-    <div id='books-media' class='col-md-4'>
+
+    <div id='evidences-databases' class='col-md-4'>
         <div class="box">
-            <h4>Livros &amp; Mídia</h4>
-            <div id='accessmedicine-response' class='row-fluid'>
+            <h4>Evidências Clínicas</h4>
+            <span class="label label-success">Nursing Reference Center</span>
+            <div id='nrc-response' class='row-fluid'>
                 <div class="throbber-loader">
                   Loading…
                 </div>
@@ -120,33 +93,29 @@
         <div class="box">
             <a name="evidences"></a>
             <h4>Evidências Clínicas</h4>
+            <span class="label label-success">DynaMed</span>
             <div id='dme-response' class='row-fluid'>
                 <div class="throbber-loader">
                   Loading…
                 </div>
             </div>
         </div>
-        <div class="box">
-            <h4 class='separate-top'>Journals</h4>
-            <div id='micromedex-response' class='row-fluid'>
-                <div class="throbber-loader">
-                  Loading…
-                </div>
-            </div>
-        </div>
     </div>
-    <div id='website-other' class='col-md-4'>
+
+    <div id='multimedia-databases' class='col-md-4'>
         <div class="box">
-            <h4>Guías de prática</h4>
-            <div id='nrc-response' class='row-fluid'>
+            <h4>Ferramentas Multimídia</h4>
+            <span class="label label-danger">Access Medicine</span>
+            <div id='accessmedicine-response' class='row-fluid'>
                 <div class="throbber-loader">
                   Loading…
                 </div>
             </div>
         </div>
         <div class="box">
-            <h4>Research Guides</h4>
-            <div id='guides-response' class='row-fluid'>
+            <h4 class='separate-top'>Ferramentas Multimídia</h4>
+            <span class="label label-danger">Micromedex</span>
+            <div id='micromedex-response' class='row-fluid'>
                 <div class="throbber-loader">
                   Loading…
                 </div>

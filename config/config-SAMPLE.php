@@ -8,6 +8,7 @@ items_per_page = 10
 api_url = ''
 profile = ''
 password = ''
+auth_type = ''
 
 [MICROMEDEX]
 
@@ -20,7 +21,7 @@ search_url = ''
 
 [BVS]
 
-api_url = ''
+api_url = ' '
 
 
 ?>

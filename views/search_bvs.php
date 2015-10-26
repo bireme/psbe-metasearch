@@ -15,6 +15,8 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
 
     $request_url = $service_url . '&q=' . $query . '&count=' . $config['items_per_page'];
 
+    $result_url = $db_config['result_url'] . '&q=' . $query . '&count=' . $config['items_per_page'];
+
     $result_json = @file_get_contents($request_url);
 
     if ($result_json){
@@ -22,6 +24,7 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     }
 
     $output['item_list'] = $result['diaServerResponse'][0]['response']['docs'];
+    $output['result_url'] = $result_url;
 
     return $app['twig']->render('bvs.html', $output);
 

@@ -1,13 +1,14 @@
-<ul>
+
+<ul class="list-unstyled">
 {% for item in item_list %}
     <li>
-        <a href="{{item.ur.0}}">{{item.ti.0}}</a>
-        <div class="authors">
-             {{ occ( {'element': item.au } ) }}
-        </div>
+        <a href="{{item.ur.0}}" target="_blank">{{item.ti.0}}</a>
         <div class="source">
             {{item.fo.0}}
         </div>
     </li>
 {% endfor %}
 <ul>
+<div class="info">
+    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+</div>

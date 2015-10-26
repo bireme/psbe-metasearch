@@ -16,6 +16,10 @@ $app->match('search_micromedex/', function (Request $request) use ($app, $config
 
     $request_url = $service_url . '&SearchTerm=' . $query;
 
+    if ($params['debug']){
+        print $request_url;
+    }
+
     $html = file_get_contents($request_url); //get the html returned from the following url
 
     $service_doc = new DOMDocument();
@@ -37,6 +41,7 @@ $app->match('search_micromedex/', function (Request $request) use ($app, $config
     }
 
     $output['total_hits'] = $total_hits;
+    $output['result_url'] = $request_url;
 
     return $app['twig']->render('micromedex.html', $output);
 

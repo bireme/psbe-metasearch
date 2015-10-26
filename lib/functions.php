@@ -187,6 +187,12 @@ function normalize_line_end($s) {
     return $s;
 }
 
+function xml_attribute($object, $attribute)
+{
+    if(isset($object[$attribute]))
+        return (string) $object[$attribute];
+}
+
 /* Twig Extensions */
 function custom_template($filename) {
     if( file_exists(CUSTOM_TEMPLATE_PATH . $filename) ) {

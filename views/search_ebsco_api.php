@@ -9,13 +9,15 @@ $app->match('search_ebsco/', function (Request $request) use ($app, $config) {
             $app['request']->query->all()
     );
 
-    $ebsco_config = $config['EBSCO'];
-    $service_url = $ebsco_config['api_url'] . 'Search?prof=' . $ebsco_config['profile'] . '&pwd=' . $ebsco_config['password'] . '&authType=&ipprof=';
+    $db_config = $config['EBSCO'];
+    $service_url = $db_config['api_url'] . 'Search?prof=' . $db_config['profile'] . '&pwd=' . $db_config['password'] . '&authType=' . $db_config['auth_type'];
+    $service_url.= '&format=brief&num_rec=' . $config['items_per_page'];
+
     $query = $params['q'];
     $db = $params['db'];
 
     $request_url = $service_url . '&query=' . $query . '&db=' . $db;
-
+    
     $service_xml = @simplexml_load_file($request_url);
 
     if ($service_xml){

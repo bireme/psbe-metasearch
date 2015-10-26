@@ -35,6 +35,8 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
       $result_set = array();
       foreach($result_links as $item){
           $node = $item->nodeValue;
+          //$link = $item->getElementsByTagName('a');
+
           $pattern_total_hits = "/\((.*)\)/";
 
           $item_label = trim(substr($node, 0, strpos($node,"(")));
@@ -42,12 +44,14 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
           preg_match($pattern_total_hits, $node, $matches);
           $item_total = $matches[1];
 
-          $result_set[$item_label] = $item_total;
+          $result_set[$item_label]['total'] = $item_total;
+          //$result_set[$item_label]['link'] = $link->getAttribute('data-url');
       }
 
     }
 
     $output['result_set'] = $result_set;
+    //$output['result_links'] = $result_links;
     return $app['twig']->render('accessmedicine.html', $output);
 
 });

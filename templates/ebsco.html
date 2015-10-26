@@ -1,7 +1,19 @@
-<ul>
+<ul class="list-unstyled">
 {% for item in item_list %}
     <li>
-        <a href="{{item.plink}}">{{item.header.controlInfo.artinfo.tig.atl}}</a>
+        {% if item.pdfLink.0 %}
+            <a href="{{item.pdfLink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
+        {% else %}
+            <a href="{{item.plink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
+        {% endif %}
+        {% if item.header.controlInfo.artinfo.jinfo.jtl %}
+            <div class="source">
+                {{item.header.controlInfo.artinfo.jinfo.jtl}}
+            </div>
+        {% endif %}
     </li>
 {% endfor %}
 <ul>
+<div class="info">
+    <a href="{{direct_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+</div>
