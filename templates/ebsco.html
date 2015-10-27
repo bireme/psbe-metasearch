@@ -1,6 +1,7 @@
 <ul class="list-unstyled">
 {% for item in item_list %}
     <li>
+
         {% if item.pdfLink.0 %}
             <a href="{{item.pdfLink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
         {% else %}
@@ -13,7 +14,10 @@
         {% endif %}
     </li>
 {% endfor %}
-<ul>
+</ul>
+
+{% include "pagination.html" %}
+
 <div class="info">
-    <a href="{{direct_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+    <a href="{{direct_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
 </div>

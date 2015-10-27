@@ -1,0 +1,39 @@
+<nav>
+    <ul class="pagination">
+         {% if pagination.has_previous %}
+             <li>
+                 <a href="javascript: page('1')"><span class="glyphicon glyphicon-fast-backward"></span></a>
+             </li>
+             <li>
+                 <a href="javascript: javascript: go_page('{{request_uri}}', '{{pagination.page - 1}}', '{{box}}')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+             </li>
+         {% else %}
+             <li class="disabled">
+                 <a href="#"><span class="glyphicon glyphicon-fast-backward"></span></a>
+             </li>
+             <li class="disabled">
+                 <a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
+             </li>
+         {% endif %}
+
+         <li class=""><a href="">Página {{ pagination.page }} de {{ pagination.num_pages }}</a></li>
+
+
+         {% if pagination.has_next %}
+             <li>
+                 <a href="javascript: go_page('{{request_uri}}', '{{pagination.page + 1}}', '{{box}}')"><span class="glyphicon glyphicon-chevron-right"></span></a>
+             </li>
+             <li>
+                 <a href="javascript: go_page('{{request_uri}}', '{{pagination.num_pages}}', '{{box}}')"><span class="glyphicon glyphicon-fast-forward"></span></a>
+             </li>
+         {% else %}
+             <li class="disabled">
+                 <a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a>
+             </li>
+             <li class="disabled">
+                 <a href="#"><span class="glyphicon glyphicon-fast-forward"></span></a>
+             </li>
+         {% endif %}
+
+    </ul>
+</nav>

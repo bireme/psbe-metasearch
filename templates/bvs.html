@@ -8,7 +8,10 @@
         </div>
     </li>
 {% endfor %}
-<ul>
+</ul>
+
+{% include "pagination.html" %}
+
 <div class="info">
-    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
 </div>

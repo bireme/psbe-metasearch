@@ -15,36 +15,52 @@
         load_bento_boxes();
     });
 
+    function fetch(url, box) {
+        search_url = url;
+        if ( !search_url.match(/\?/) ){
+            search_url += '?';
+        }
+        search_url += '&q=' + $('#q').val() + "&box=" + box;
+        console.log(search_url);
+
+        $.ajax({
+            type: "GET",
+            url: search_url,
+            data: data
+         }).done(function(resp) {
+                $('#' + box).html(resp);
+        });
+    };
+
     function load_bento_boxes(){
-        function fetch(vals) {
-            search_url = vals[0];
-            if ( !search_url.match(/\?/) ){
-                search_url += '?';
-            }
-            search_url += '&q=' + $('#q').val();
-            console.log(search_url);
-
-            $.ajax({
-                type: "GET",
-                url: search_url,
-                data: data
-             }).done(function(resp) {
-                    $(vals[1]).html(resp);
-            });
-        };
-
         var blocks = [
-            ["search_bvs/", '#bvs-response'],
-            ["search_ebsco/?db=dme", '#dme-response'],
-            ["search_accessmedicine/", '#accessmedicine-response'],
-            ["search_ebsco/?db=nrc", '#nrc-response'],
-            ["search_micromedex/", '#micromedex-response'],
+            ["search_bvs/", 'bvs-response'],
+            ["search_ebsco/?db=dme", 'dme-response'],
+            ["search_accessmedicine/", 'accessmedicine-response'],
+            ["search_ebsco/?db=nrc", 'nrc-response'],
+            ["search_micromedex/", 'micromedex-response'],
         ];
         for (var i=0; i < blocks.length; i++) {
-            fetch(blocks[i]);
+            fetch(blocks[i][0], blocks[i][1]);
         }
-      }
+    }
     })(jQuery);
+
+    function go_page(url, page, box){
+        search_url = url + "&page=" + page + "&box=" + box;
+        console.log(search_url);
+
+        $('#' + box).html('<div class="throbber-loader">Loading...</div>');
+
+        $.ajax({
+            type: "GET",
+            url: search_url
+         }).done(function(resp) {
+            $('#' + box).html(resp);
+        });
+
+    }
+
 </script>
 {% endblock javascript_extra %}
 
