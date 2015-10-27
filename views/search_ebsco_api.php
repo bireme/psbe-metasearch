@@ -49,8 +49,9 @@ $app->match('search_ebsco/', function (Request $request) use ($app, $config) {
     $output['total_hits'] = $total_hits;
     $output['item_list'] = $item_list;
     $output['pagination'] = $pagination;
-    $output['box'] = $params['box'];
     $output['request_uri'] = $request_uri;
+    $output['result_url'] = $db_config['result_url'] . '&bquery=' . $query . '&db=' . $db;
+    $output['box'] = $params['box'];
 
     return $app['twig']->render('ebsco.html', $output);
 

@@ -12,7 +12,9 @@
     var searchid=0;
 
     $(document).ready(function (){
-        load_bento_boxes();
+        {% if q %}
+            load_bento_boxes();
+        {% endif %}
     });
 
     function fetch(url, box) {
