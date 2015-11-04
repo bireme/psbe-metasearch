@@ -2,7 +2,7 @@
 <ul class="list-unstyled">
 {% for item in result_set|keys %}
     <li>
-        <a href="{{result_set[item]['link']}}" target="_blank">{{item}} ({{result_set[item]['total']}})</a>
+        <a href="{{ config['search_url'] }}?{{ result_set[item]['link']|raw }}" target="_blank">{{item}} ({{result_set[item]['total']}})</a>
     </li>
 {% endfor %}
 <ul>

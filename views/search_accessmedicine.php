@@ -30,12 +30,12 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
       $service_xpath = new DOMXPath($service_doc);
 
       //get total result
-      $result_links = $service_xpath->query('//div[@role="navigation"]/ul[@data-level="1"]/li');
+      $result_links = $service_xpath->query('//div[@role="navigation"]/ul[@data-level="1"]/li/a');
 
       $result_set = array();
       foreach($result_links as $item){
           $node = $item->nodeValue;
-          //$link = $item->getElementsByTagName('a');
+          $link = $item->getAttribute('data-url');
 
           $pattern_total_hits = "/\((.*)\)/";
 
@@ -45,13 +45,14 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
           $item_total = $matches[1];
 
           $result_set[$item_label]['total'] = $item_total;
-          //$result_set[$item_label]['link'] = $link->getAttribute('data-url');
+          $result_set[$item_label]['link'] = $link;
       }
 
     }
 
     $output['result_set'] = $result_set;
-    //$output['result_links'] = $result_links;
+    $output['config'] = $db_config;
+
     return $app['twig']->render('accessmedicine.html', $output);
 
 });

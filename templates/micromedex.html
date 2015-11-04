@@ -1,7 +1,3 @@
-{% if total_hits > 0 %}
-Total de resultados encontrados {{total_hits}}
-{% endif %}
-
 <div class="info">
-    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados</a>
+    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados {% if total_hits > 0 %}({{total_hits}}){% endif %}</a>
 </div>
