@@ -1,0 +1,95 @@
+<h3>Portal Saúde Baseada em Evidências</h3>
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <form action="" method='GET'>
+            <div class="input-group stylish-input-group">
+                <input id="q" name="q" type="text" class="form-control"  placeholder="Entre uma ou mais palavras..." value="{{ q }}" >
+                <span class="input-group-addon">
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if q %}
+
+<div id='summary' class='row'>
+
+    <div class="col-md-12 text-center">
+        <button class="btn btn-info">Evidências Clínicas</button>
+        <button class="btn btn-warning">Artigos Científicos</button>
+        <button class="btn btn-success">Ferramentas Multimídia</button>
+    </div>
+
+</div>
+
+<div id="results">
+    <div id='evidences-databases' class='row'>
+        <div class="notice notice-info">
+            <strong>Evidências Clínicas</strong>
+        </div>
+
+        <div class="box">
+            <a name="evidences"></a>
+            <h4>DynaMed</h4>
+            <div id='dme-response' class='row-fluid'>
+                <div class="throbber-loader">
+                  Loading…
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <h4>Nursing Reference Center</h4>
+            <div id='nrc-response' class='row-fluid'>
+                <div class="throbber-loader">
+                  Loading…
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id='articles-databases' class='row'>
+        <div class="notice notice-warning">
+            <strong>Artigos Científicos</strong>
+        </div>
+
+        <div class="box">
+            <h4>Biblioteca Virtual em Saúde</h4>
+            <div id='bvs-response' class='row-fluid'>
+                <div class="throbber-loader">
+                  Loading…
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id='multimedia-databases' class='row'>
+        <div class="notice notice-success">
+            <strong>Ferramentas Multimídia</strong>
+        </div>
+
+        <div class="box">
+            <h4>Access Medicine</h4>
+            <div id='accessmedicine-response' class='row-fluid'>
+                <div class="throbber-loader">
+                  Loading…
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <h4 class='separate-top'>Micromedex</h4>
+            <div id='micromedex-response' class='row-fluid'>
+                <div class="throbber-loader">
+                  Loading…
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

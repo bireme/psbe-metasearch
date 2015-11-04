@@ -14,6 +14,7 @@ $app->match('/', function (Request $request) use ($app, $config) {
 
     $output = array();
     $output['q'] = $q;
+    $output['layout'] = ($params['layout'] ? $params['layout'] : '1');
 
     return $app['twig']->render('home.html', $output);
 
