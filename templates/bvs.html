@@ -1,17 +1,22 @@
+{% if total_hits > 0 %}
+    <ul class="list-unstyled">
+    {% for item in item_list %}
+        <li>
+            <a href="{{item.ur.0}}" target="_blank">{{item.ti.0}}</a>
+            <div class="source">
+                {{item.fo.0}}
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
 
-<ul class="list-unstyled">
-{% for item in item_list %}
-    <li>
-        <a href="{{item.ur.0}}" target="_blank">{{item.ti.0}}</a>
-        <div class="source">
-            {{item.fo.0}}
-        </div>
-    </li>
-{% endfor %}
-</ul>
+    {% include "pagination.html" %}
 
-{% include "pagination.html" %}
-
-<div class="info">
-    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
-</div>
+    <div class="info">
+        <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
+    </div>
+{% else %}
+    <div class="noresults text-center alert">
+        <h4>Nenhum resultado encontrado</h4>
+    </div>
+{% endif %}

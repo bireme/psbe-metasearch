@@ -1,23 +1,29 @@
-<ul class="list-unstyled">
-{% for item in item_list %}
-    <li>
+{% if total_hits > 0 %}
+    <ul class="list-unstyled">
+    {% for item in item_list %}
+        <li>
 
-        {% if item.pdfLink.0 %}
-            <a href="{{item.pdfLink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
-        {% else %}
-            <a href="{{item.plink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
-        {% endif %}
-        {% if item.header.controlInfo.jinfo.jtl %}
-            <div class="source">
-                {{item.header.controlInfo.jinfo.jtl}}
-            </div>
-        {% endif %}
-    </li>
-{% endfor %}
-</ul>
+            {% if item.pdfLink.0 %}
+                <a href="{{item.pdfLink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
+            {% else %}
+                <a href="{{item.plink}}" target="_blank">{{item.header.controlInfo.artinfo.tig.atl}}</a>
+            {% endif %}
+            {% if item.header.controlInfo.jinfo.jtl %}
+                <div class="source">
+                    {{item.header.controlInfo.jinfo.jtl}}
+                </div>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
 
-{% include "pagination.html" %}
+    {% include "pagination.html" %}
 
-<div class="info">
-    <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
-</div>
+    <div class="info">
+        <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
+    </div>
+{% else %}
+    <div class="noresults text-center alert">
+        <h4>Nenhum resultado encontrado</h4>
+    </div>
+{% endif %}

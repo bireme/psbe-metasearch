@@ -40,7 +40,7 @@ $app->match('search_micromedex/', function (Request $request) use ($app, $config
 
     }
 
-    $output['total_hits'] = $total_hits;
+    $output['total_hits'] = intval($total_hits);
     $output['result_url'] = $request_url;
 
     return $app['twig']->render('micromedex.html', $output);

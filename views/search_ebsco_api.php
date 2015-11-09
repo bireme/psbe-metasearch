@@ -27,7 +27,7 @@ $app->match('search_ebsco/', function (Request $request) use ($app, $config) {
         $service_url.= '&startrec=' . $from;
     }
 
-    $query = $params['q'];
+    $query = urlencode($params['q']);
     $db = $params['db'];
 
     $request_url = $service_url . '&query=' . $query . '&db=' . $db;

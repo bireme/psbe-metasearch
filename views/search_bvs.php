@@ -13,7 +13,7 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
 
     $db_config = $config['BVS'];
     $service_url = $db_config['api_url'];
-    $query = $params['q'];
+    $query = urlencode($params['q']);
 
     if ($db_config['items_per_page'] != ''){
         $count = $db_config['items_per_page'];
@@ -22,7 +22,6 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     }
 
     $request_url = $service_url . '&q=' . $query . '&count=' . $config['items_per_page'];
-
     $result_url = $db_config['result_url'] . '&q=' . $query . '&count=' . $count;
 
     if ($params['page'] > 1){

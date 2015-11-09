@@ -14,9 +14,10 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
 
     $query = $params['q'];
 
-    $request_url = $service_url . '?q=' . $query;
+    $request_url = $service_url . '?q=' . urlencode($query);
+    $result_url = $request_url;
 
-    $html = file_get_contents($request_url); //get the html returned from the following url
+    $html = @file_get_contents($request_url); //get the html returned from the following url
 
     $service_doc = new DOMDocument();
 
@@ -33,6 +34,7 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
       $result_links = $service_xpath->query('//div[@role="navigation"]/ul[@data-level="1"]/li/a');
 
       $result_set = array();
+      $total_hits = 0;
       foreach($result_links as $item){
           $node = $item->nodeValue;
           $link = $item->getAttribute('data-url');
@@ -46,10 +48,13 @@ $app->match('search_accessmedicine/', function (Request $request) use ($app, $co
 
           $result_set[$item_label]['total'] = $item_total;
           $result_set[$item_label]['link'] = $link;
+          $total_hits += intval($item_total);
       }
 
     }
 
+    $output['total_hits'] = $total_hits;
+    $output['result_url'] = $result_url;
     $output['result_set'] = $result_set;
     $output['config'] = $db_config;
 

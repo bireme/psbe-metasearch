@@ -1,8 +1,17 @@
+{% if total_hits > 0 %}
+    <ul class="list-unstyled">
+    {% for item in result_set|keys %}
+        <li>
+            <a href="{{ config['search_url'] }}?{{ result_set[item]['link']|raw }}" target="_blank">{{item}} ({{result_set[item]['total']}})</a>
+        </li>
+    {% endfor %}
+    <ul>
 
-<ul class="list-unstyled">
-{% for item in result_set|keys %}
-    <li>
-        <a href="{{ config['search_url'] }}?{{ result_set[item]['link']|raw }}" target="_blank">{{item}} ({{result_set[item]['total']}})</a>
-    </li>
-{% endfor %}
-<ul>
+    <div class="info">
+        <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
+    </div>
+{% else %}
+    <div class="noresults text-center alert">
+        <h4>Nenhum resultado encontrado</h4>
+    </div>
+{% endif %}
