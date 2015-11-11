@@ -37,10 +37,10 @@
     function load_bento_boxes(){
         var blocks = [
             ["search_bvs/", 'bvs-response'],
-            //["search_ebsco/?db=dme", 'dme-response'],
-            //["search_accessmedicine/", 'accessmedicine-response'],
-            //["search_ebsco/?db=nrc", 'nrc-response'],
-            //["search_micromedex/", 'micromedex-response'],
+            ["search_ebsco/?db=dme", 'dme-response'],
+            ["search_accessmedicine/", 'accessmedicine-response'],
+            ["search_ebsco/?db=nrc", 'nrc-response'],
+            ["search_micromedex/", 'micromedex-response'],
         ];
         for (var i=0; i < blocks.length; i++) {
             fetch(blocks[i][0], blocks[i][1]);
