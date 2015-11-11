@@ -5,11 +5,15 @@
                 {% set cluster_labels = 'REFINE_' ~ filter %}
                 <strong>{{ translate(filter, 'REFINE') }}</strong>
                 <ul class="list-unstyled">
-                {% for item in clusters[filter] %}
-                    {% if item.0 != ''%}
-                        <li><a href="javascript: apply_filter('{{request_uri}}', '{{filter}}', '{{item.0}}', '{{box}}')">{{ translate(item.0, cluster_labels) }}</a> ({{item.1}})</li>
-                    {% endif %}
-                {% endfor %}
+                {% if selected_filters[filter] %}
+                    <li><a href="javascript: apply_filter('{{request_uri}}', '{{filter}}', '{{item.0}}', '{{box}}', true)"><span class="glyphicon glyphicon-remove"></span></a> {{ translate(selected_filters[filter], cluster_labels) }}</li>
+                {% else %}
+                    {% for item in clusters[filter] %}
+                        {% if item.0 != ''%}
+                            <li><a href="javascript: apply_filter('{{request_uri}}', '{{filter}}', '{{item.0}}', '{{box}}')">{{ translate(item.0, cluster_labels) }}</a> ({{item.1}})</li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 </ul>
             {% endfor %}
             </ul>

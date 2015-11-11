@@ -18,10 +18,14 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     $filter_args = $params['filter'];
 
     $filter_param = '';
+    $selected_filters = array();
     if (isset($filter_args)){
         foreach ($filter_args as $filter){
             $filter_parts = explode(':', $filter);
-            $filter_param .= '&filter[' . $filter_parts[0] . '][]=' . str_replace(' ','%20',$filter_parts[1]);
+            $filter_name = $filter_parts[0];
+            $filter_value = $filter_parts[1];
+            $filter_param .= '&filter[' . $filter_name . '][]=' . str_replace(' ', '%20', $filter_value);
+            $selected_filters[$filter_name] = $filter_value;
         }
     }
 
@@ -75,10 +79,10 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     $output['pagination'] = $pagination;
     $output['request_uri'] = $request_uri;
     $output['filter_list'] = $filter_list;
+    $output['selected_filters'] = $selected_filters;
     $output['texts'] = $texts;
     $output['lang'] = $lang;
     $output['box'] = $params['box'];
-
 
     return $app['twig']->render('bvs.html', $output);
 

@@ -32,12 +32,13 @@
     font-size: 13px;
 }
 
+#results .filters{
+    border-right: solid 1px #ccc;
+}
+
 #results .filters UL{
     font-size: 13px;
     padding: 0 0 0 15px;
-}
-
-#results .filters UL LI{
 }
 
 

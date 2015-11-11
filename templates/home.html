@@ -62,8 +62,24 @@
         });
     }
 
-    function apply_filter(url, filter, value, box){
-        search_url = url + "&filter[]=" + filter + ":" + value + "&box=" + box;
+    function apply_filter(url, filter, value, box, remove){
+        if (remove == true){
+            url_parts = url.split(/&/);
+            url_params = url_parts.slice(1);
+            search_url = url_parts[0];
+
+            for (var i=0; i < url_params.length; i++){
+                param = url_params[i];
+                remove_filter = 'filter[]=' + filter + ':';
+                if ( !param.startsWith(remove_filter) ){
+                    search_url += '&' + param;
+                }
+            }
+        } else {
+            search_url = url + "&filter[]=" + filter + ":" + value;
+        }
+        search_url += "&box=" + box;
+
         console.log(search_url);
 
         $('#' + box).html('<div class="throbber-loader">Loading...</div>');
