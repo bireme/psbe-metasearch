@@ -3,7 +3,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app->match('search_bvs/', function (Request $request) use ($app, $config) {
-
+    global $texts;
     $params = array_merge(
         $app['request']->request->all(),
         $app['request']->query->all()
@@ -14,6 +14,16 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     $db_config = $config['BVS'];
     $service_url = $db_config['api_url'];
     $query = urlencode($params['q']);
+    $lang = (isset($param['lang']) ? $param['lang'] : $config['default_lang']);
+    $filter_args = $params['filter'];
+
+    $filter_param = '';
+    if (isset($filter_args)){
+        foreach ($filter_args as $filter){
+            $filter_parts = explode(':', $filter);
+            $filter_param .= '&filter[' . $filter_parts[0] . '][]=' . str_replace(' ','%20',$filter_parts[1]);
+        }
+    }
 
     if ($db_config['items_per_page'] != ''){
         $count = $db_config['items_per_page'];
@@ -21,8 +31,12 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
         $count = $config['items_per_page'];
     }
 
-    $request_url = $service_url . '&q=' . $query . '&count=' . $config['items_per_page'];
-    $result_url = $db_config['result_url'] . '&q=' . $query . '&count=' . $count;
+    $request_params = '&q=' . $query . '&count=' . $count . $filter_param;
+
+    $request_url = $service_url . $request_params;
+    $result_url = $db_config['result_url'] . $request_params;
+
+    //print $request_url;
 
     if ($params['page'] > 1){
         $from = ($params['page'] * $count) + 1;
@@ -43,11 +57,26 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
         $pagination['has_previous'] = ($pagination['page'] == 1? false : true);
     }
 
+    $filter_list = explode(', ', $db_config['filter_list']);
+    // remove empty elements
+    $filter_list = array_filter($filter_list);
+
+    if (count($filter_list) > 0){
+        $translation_file_url = $db_config['result_url'] . "/locale/" . $lang . "/texts.ini";
+
+        $translation_file_content = file_get_contents($translation_file_url);
+        $texts = parse_ini_string($translation_file_content, true);
+    }
+
     $output['total_hits'] = $total_hits;
     $output['item_list'] = $result['diaServerResponse'][0]['response']['docs'];
+    $output['clusters'] = $result['diaServerResponse'][0]['facet_counts']['facet_fields'];
     $output['result_url'] = $result_url;
     $output['pagination'] = $pagination;
     $output['request_uri'] = $request_uri;
+    $output['filter_list'] = $filter_list;
+    $output['texts'] = $texts;
+    $output['lang'] = $lang;
     $output['box'] = $params['box'];
 
 

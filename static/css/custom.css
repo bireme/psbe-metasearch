@@ -30,7 +30,14 @@
 
 #results .source{
     font-size: 13px;
-    color: #888;
+}
+
+#results .filters UL{
+    font-size: 13px;
+    padding: 0 0 0 15px;
+}
+
+#results .filters UL LI{
 }
 
 

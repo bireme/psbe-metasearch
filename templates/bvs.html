@@ -1,16 +1,35 @@
 {% if total_hits > 0 %}
-    <ul class="list-unstyled">
-    {% for item in item_list %}
-        <li>
-            <a href="{{item.ur.0}}" target="_blank">{{item.ti.0}}</a>
-            <div class="source">
-                {{item.fo.0}}
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+    {% if filter_list|length > 0 %}
+        <div class="filters col-md-3">
+            {% for filter in filter_list %}
+                {% set cluster_labels = 'REFINE_' ~ filter %}
+                <strong>{{ translate(filter, 'REFINE') }}</strong>
+                <ul class="list-unstyled">
+                {% for item in clusters[filter] %}
+                    {% if item.0 != ''%}
+                        <li><a href="javascript: apply_filter('{{request_uri}}', '{{filter}}', '{{item.0}}', '{{box}}')">{{ translate(item.0, cluster_labels) }}</a> ({{item.1}})</li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="col-md-8">
+        <h4>Artigos encontrados: {{total_hits}}</h4>
+        <ul class="list-unstyled">
+        {% for item in item_list %}
+            <li>
+                <a href="{{item.ur.0}}" target="_blank">{{item.ti.0}}</a>
+                <div class="source">
+                    {{item.fo.0}}
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
 
-    {% include "pagination.html" %}
+        {% include "pagination.html" %}
+    </div>
 
     <div class="info">
         <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
