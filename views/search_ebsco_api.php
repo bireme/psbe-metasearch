@@ -31,6 +31,13 @@ $app->match('search_ebsco/', function (Request $request) use ($app, $config) {
     $db = $params['db'];
 
     $request_url = $service_url . '&query=' . $query . '&db=' . $db;
+    $result_url = $db_config['result_url'] . '&bquery=' . $query;
+    // add different profiles depending on search database
+    if ($db == 'dme'){
+        $result_url .= '&profile=dynamed';
+    }elseif($db == 'nrc'){
+        $result_url .= '&profile=nrc';
+    }
 
     $service_xml = @simplexml_load_file($request_url);
 
@@ -46,12 +53,14 @@ $app->match('search_ebsco/', function (Request $request) use ($app, $config) {
         $pagination['has_previous'] = ($pagination['page'] == 1? false : true);
     }
 
+    $output['request_url'] = $request_url;
     $output['total_hits'] = $total_hits;
     $output['item_list'] = $item_list;
     $output['pagination'] = $pagination;
     $output['request_uri'] = $request_uri;
-    $output['result_url'] = $db_config['result_url'] . '&bquery=' . $query . '&db=' . $db;
+    $output['result_url'] = $result_url;
     $output['box'] = $params['box'];
+    $output['debug'] = $params['debug'];
 
     return $app['twig']->render('ebsco.html', $output);
 
