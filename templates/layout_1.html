@@ -1,18 +1,16 @@
-<h3>Portal Saúde Baseada em Evidências</h3>
+{% include 'header.html' %}
 
 <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-        <form action="" method='GET'>
-            <div class="input-group stylish-input-group">
-                <input id="q" name="q" type="text" class="form-control"  placeholder="Pesquise usando termos em inglês para um resultado mais completo" value="{{ q }}" >
-                <span class="input-group-addon">
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
-        </form>
-    </div>
+    <form action="" method="GET">
+        <div class="col-sm-offset-3 col-lg-6">
+           <div class="input-group">
+             <input type="text" name="q" class="form-control" placeholder="Pesquise usando termos em inglês para um resultado mais completo" value="{{ q }}">
+             <span class="input-group-btn">
+               <button class="btn btn-default" type="button">Pesquisar</button>
+             </span>
+           </div><!-- /input-group -->
+         </div><!-- /.col-lg-6 -->
+    </form>
 </div>
 
 {% if q %}
