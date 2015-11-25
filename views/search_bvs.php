@@ -38,7 +38,7 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
     $request_params = '&q=' . $query . '&count=' . $count . $filter_param;
 
     $request_url = $service_url . $request_params;
-    $result_url = $db_config['result_url'] . $request_params;
+    $result_url = $db_config['result_url'] . '?' . $request_params;
 
     //print $request_url;
 
