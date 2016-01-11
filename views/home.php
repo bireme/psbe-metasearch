@@ -11,12 +11,22 @@ $app->match('/', function (Request $request) use ($app, $config) {
     );
 
     $q = $params['q'];
+    $access_token = $params['access_token'];
+
+    // validate user token
+    $valid_token = validate_token($access_token);
 
     $output = array();
-    $output['q'] = $q;
-    $output['layout'] = ($params['layout'] ? $params['layout'] : '1');
+    if ($valid_token == true){
+        $output['q'] = $q;
+        $output['layout'] = ($params['layout'] ? $params['layout'] : '1');
+        $output['access_token'] = $access_token;
 
-    return $app['twig']->render('home.html', $output);
+        return $app['twig']->render('home.html', $output);
+    }else{
+        $output['redirect_url'] = $config['login_redirect_url'];
+        return $app['twig']->render('invalid_access.html', $output);
+    }
 
 });
 

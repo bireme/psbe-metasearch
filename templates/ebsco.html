@@ -1,3 +1,7 @@
+{% if debug %}
+    <textarea cols="80" rows="5">{{ request_url }}</textarea>
+{% endif %}
+
 {% if total_hits > 0 %}
     <ul class="list-unstyled">
     {% for item in item_list %}

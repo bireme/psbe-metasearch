@@ -314,4 +314,39 @@ function find_in_array($array, $key, $val) {
     return false;
 }
 
+function validate_token($access_token) {
+    /*
+    Verifies that an access-token is valid
+    Returns false on fail, and an e-mail on success
+    */
+    global $config;
+
+    $valid_token = false;
+    $oauth2_userinfo_url = $config['oauth2_userinfo_url'];
+    $opts = array(
+      'http'=>array(
+        'method'=>"GET",
+        'header'=>"Authorization: Bearer " . $access_token . "\r\n"
+      )
+    );
+    $context = stream_context_create($opts);
+
+    // open request using the HTTP headers set above
+    $http_request = @file_get_contents($oauth2_userinfo_url, false, $context);
+
+    //print_r($http_response_header);
+
+    // check for response header 200 OK
+    if (strpos($http_response_header[0],' 200 ') !== false) {
+        $user_info = json_decode($http_request, true);
+
+        // check for email attribute for validate token
+        if (array_key_exists('email', $user_info)){
+            $valid_token = true;
+        }
+    }
+
+    return $valid_token;
+}
+
 ?>
