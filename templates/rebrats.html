@@ -1,0 +1,12 @@
+    <div class="db_description">
+        Experiências em Tecnologias em Saúde
+    </div>
+    <form action="{{result_url}}" method="post" target="_blank" name="rebrats">
+        {% for param_name, param_value in result_params %}
+            <input type="hidden" name="{{param_name}}" value="{{param_value}}" />
+        {% endfor %}
+
+        <div class="col-md-12 text-right all_results">
+            <a href="#" onclick="document.forms['rebrats'].submit(); return false;" class="btn">Ver resultados</a>
+        </div>
+    </form>

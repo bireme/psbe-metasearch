@@ -1,0 +1,12 @@
+    <div class="db_description">
+        Bulário Eletrônico
+    </div>
+    <form action="{{result_url}}" method="post" target="_blank" name="bulario">
+        {% for param_name, param_value in result_params %}
+            <input type="hidden" name="{{param_name}}" value="{{param_value}}" />
+        {% endfor %}
+
+        <div class="col-md-12 text-right all_results">
+            <a href="#" onclick="document.forms['bulario'].submit(); return false;" class="btn">Ver resultados</a>
+        </div>
+    </form>

@@ -349,4 +349,22 @@ function validate_token($access_token) {
     return $valid_token;
 }
 
+function post_it($url, $params){
+
+    parse_str($params, $data);
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    return $result;
+
+}
+
 ?>

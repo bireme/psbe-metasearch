@@ -1,0 +1,12 @@
+<div class="db_description">
+    Revisões sistemáticas
+</div>
+{% if total_hits > 0 %}
+    <div class="col-md-12 text-right all_results">
+        <a href="{{result_url}}" target="_blank" class="btn">Ver resultados ({{total_hits}})</a>
+    </div>
+{% else %}
+    <div class="noresults text-center alert">
+        <h4>Nenhum resultado encontrado</h4>
+    </div>
+{% endif %}
