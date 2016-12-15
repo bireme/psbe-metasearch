@@ -71,11 +71,13 @@ $app->match('search_bvs/', function (Request $request) use ($app, $config) {
         $translation_file_content = file_get_contents($translation_file_url);
         $texts = parse_ini_string($translation_file_content, true);
     }
+    $detail_url = $db_config['result_url'] . 'resource/' . $lang . '/';
 
     $output['total_hits'] = $total_hits;
     $output['item_list'] = $result['diaServerResponse'][0]['response']['docs'];
     $output['clusters'] = $result['diaServerResponse'][0]['facet_counts']['facet_fields'];
     $output['result_url'] = $result_url;
+    $output['detail_url'] = $detail_url;
     $output['pagination'] = $pagination;
     $output['request_uri'] = $request_uri;
     $output['filter_list'] = $filter_list;
