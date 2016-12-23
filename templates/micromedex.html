@@ -1,6 +1,10 @@
 {% if total_hits > 0 %}
     <div class="col-md-12 text-right all_results">
-        <a href="{{result_url}}" target="_blank" class="btn">Ver todos os resultados ({{total_hits}})</a>
+        {% if total_hits == 1 %}
+            <a href="{{result_url}}" target="_blank" class="btn">Ver resultado</a>
+        {% else %}
+            <a href="{{result_url}}" target="_blank" class="btn">Ver resultados ({{total_hits}})</a>
+        {% endif %}
     </div>
 {% else %}
     <div class="noresults text-center alert">

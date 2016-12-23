@@ -36,11 +36,21 @@ $app->match('search_micromedex/', function (Request $request) use ($app, $config
       //get total result
       $result_row = $service_xpath->query("//h1");
       $total_html = (string) $result_row->item(0)->nodeValue;
-      $total_hits = substr($total_html, 0, strpos($total_html,"results"));
-
+      if ($total_html){
+          // case 1: multiples results found
+        if (preg_match('/results/', $total_html)){
+            $total_hits = substr($total_html, 0, strpos($total_html,"results"));
+            $total_hits = intval($total_hits);
+        }else{
+            // case 2: single result found
+            $total_hits = 1;
+        }
+      }else{
+         // case 3: no results found
+        $total_hits = 0;
+      }
     }
-
-    $output['total_hits'] = intval($total_hits);
+    $output['total_hits'] = $total_hits;
     $output['result_url'] = $request_url;
 
     return $app['twig']->render('micromedex.html', $output);
