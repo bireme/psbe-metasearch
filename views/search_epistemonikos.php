@@ -13,7 +13,7 @@ $app->match('search_epistemonikos/', function (Request $request) use ($app, $con
 
     $query = $params['q'];
 
-    $request_url =  $db_config['search_url'] . '?q=' . $query;
+    $request_url =  $db_config['search_url'] . '?q=' . urlencode($query);
 
     $html = file_get_contents($request_url); //get the html returned from the following url
 
