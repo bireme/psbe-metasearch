@@ -28,35 +28,39 @@ $app->match('search_micromedex/', function (Request $request) use ($app, $config
 
     if(!empty($html)){ //if any html is actually returned
 
-      $service_doc->loadHTML($html);
-      libxml_clear_errors(); //remove errors for yucky html
-
-      $service_xpath = new DOMXPath($service_doc);
-
-      //get total result
-      $result_row = $service_xpath->query("//h1");
-      $total_html = (string) $result_row->item(0)->nodeValue;
-      if ($total_html){
-          // case 1: multiples results found. ex. health
-        if (preg_match('/results/', $total_html)){
-            $total_hits = substr($total_html, 0, strpos($total_html,"results"));
-            $total_hits = intval($total_hits);
-        }else{
-            // case 2: single result found. ex. exoparin
-            $total_hits = 1;
-        }
+      if (preg_match("/There were no results found for/", $html)) {
+          $total_hits = 0;
       }else{
-          // case 3: check for brand name result page. ex. clexane
-          $result_row = $service_xpath->query("//div[@id='displayCountBar']");
-          $total_html = (string) $result_row->item(0)->nodeValue;
+          $service_doc->loadHTML($html);
+          libxml_clear_errors(); //remove errors for bad html
 
-          if ($total_html){
-              // extract numbers from html text
-              preg_match_all('!\d+!', $total_html, $matches);
-              $total_hits = $matches[0][0];
+          $service_xpath = new DOMXPath($service_doc);
+
+          //check for single result or list result page
+          $result_row = $service_xpath->query("//h1");
+          if ($result_row->length > 0){
+              $total_html = (string) $result_row->item(0)->nodeValue;
+              // case 1: multiples results found. ex. health
+            if (preg_match('/results/', $total_html)){
+                $total_hits = substr($total_html, 0, strpos($total_html,"results"));
+                $total_hits = intval($total_hits);
+            }else{
+                // case 2: single result found. ex. exoparin
+                $total_hits = 1;
+            }
           }else{
-              // case 3: no results found
-              $total_hits = 0;
+              // check for brand name (ex. clexane) or drug class (ex. benzodiazepines)
+              $result_row = $service_xpath->query("//div[@id='displayCountBarPrinted']");
+
+              if ($result_row->length > 0){
+                  $total_html = (string) $result_row->item(0)->nodeValue;
+                  // extract numbers from html text
+                  preg_match_all('!\d+!', $total_html, $matches);
+                  $total_hits = $matches[0][0];
+              }else{
+                  // other types of result page
+                  $total_hits = 1;
+              }
           }
       }
     }
